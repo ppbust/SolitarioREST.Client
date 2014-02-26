@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd"> -->
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<!-- TRACE DEBUG INFO WARN ERROR FATAL -->
+
+	<appender name="consola" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.out" />
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="[%-5p] %d{dd MMM-HH:mm:ss}  %c{1}:  %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="jdbc" class="org.apache.log4j.jdbc.JDBCAppender">
+		<param name="driver" value="com.mysql.jdbc.Driver" />
+		<param name="URL" value="jdbc:mysql://localhost:3306/jee?autoReconnect=true" />
+		<param name="user" value="root" />
+		<param name="password" value="" />
+		<!-- La tabla debe existir -->
+		<!-- CREATE TABLE Log (id INT AUTO_INCREMENT,prioridad VARCHAR(10),fecha VARCHAR(20),
+		           clase VARCHAR(50),mensaje VARCHAR(255),PRIMARY KEY (ID)) -->
+		<param name="sql"
+			value="INSERT INTO jee.Log (Prioridad,Fecha,Clase,Mensaje)
+			       VALUES ( '%p','%d{dd-MMM HH:mm:ss}','%c{1}','%m')" />
+	</appender>
+
+	<root>
+		<priority value="info" />
+		<appender-ref ref="consola" />
+		<!--  <appender-ref ref="jdbc" /> -->
+	</root>
+
+</log4j:configuration>
